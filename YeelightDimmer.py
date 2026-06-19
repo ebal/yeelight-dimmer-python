@@ -124,7 +124,8 @@ class YeelightDimmer(object):
         self.peripheral.writeCharacteristic(self.HANDLE_AUTH_INIT, self.XIAOMI_KEY1, True)
         descriptors[1].write(self.SUBSCRIBE_TRUE, True)
 
-        self.peripheral.writeCharacteristic(self.HANDLE_AUTH, XiaomiEncryption.cipher(XiaomiEncryption.mixA(self.reversed_mac, self.PRODUCT_ID), self.token), "true")
+        #self.peripheral.writeCharacteristic(self.HANDLE_AUTH, XiaomiEncryption.cipher(XiaomiEncryption.mixA(self.reversed_mac, self.PRODUCT_ID), self.token), "True")
+        self.peripheral.writeCharacteristic( self.HANDLE_AUTH, XiaomiEncryption.cipher(XiaomiEncryption.mixA(self.reversed_mac, self.PRODUCT_ID), self.token), True)
 
         self.peripheral.waitForNotifications(10.0) # 10 sec auth timeout
 
@@ -132,8 +133,14 @@ class YeelightDimmer(object):
             self.onAuthFail()
             return
 
+        print("DEBUG token:", self.token.hex() if hasattr(self.token, "hex") else self.token)
+        print("DEBUG auth_init handle:", self.HANDLE_AUTH_INIT)
+        print("DEBUG auth handle:", self.HANDLE_AUTH)
+        print("DEBUG beacon handle:", self.HANDLE_BEACON_KEY)
+        print("DEBUG encrypted beacon:", self.peripheral.readCharacteristic(self.HANDLE_BEACON_KEY).hex())
+
         self.peripheral.writeCharacteristic(self.HANDLE_AUTH, XiaomiEncryption.cipher(self.token, self.XIAOMI_KEY2), True)
-        
+
         # have to read firmware version to complete auth
         self.firmware_version = XiaomiEncryption.cipher(self.token, self.peripheral.readCharacteristic(self.HANDLE_READ_FIRMWARE_VERSION)).decode()
 
