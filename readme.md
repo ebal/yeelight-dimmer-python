@@ -1,5 +1,29 @@
 # Python Yeelight YLKG07YL/YLKG08YL dimmer handler
 
+## Prologue
+
+This is a fork  for specific this version:  
+
+Yeelight Wireless Smart Dimmer
+
+```
+Dimmer Switch 2B0B (YLKG07YL/YLKG08YL)
+Device info: YLKG07YL/YLKG08YL by Xiaomi
+Firmware: Xiaomi (MiBeacon V3 encrypted)
+```
+
+![Yeelight Wireless Smart Dimmer](Yeelight_Wireless_Smart_Dimmer.jpeg)
+
+It works with HomeAssistant Xiaomi BLE integration:
+
+![Xiaomi BLE](Xiaomi_BLE.png)
+
+
+eg.
+```bash
+# sudo python3 demo.py F8:24:41:C9:2B:0B
+```
+
 ## About
 
 With this code you can handle dimmer changes in your python code. 
